@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_container_drivey
+    environment:
+      POSTGRES_USER: drivey
+      POSTGRES_PASSWORD: drivey
+      POSTGRES_DB: drivey_db
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - drivey_network
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container_drivey
+    environment:
+      PGADMIN_DEFAULT_EMAIL: alirza.mehrzad@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "8090:80"
+    networks:
+      - drivey_network
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  redis:
+    image: redis
+    container_name: redis_container_drivey
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - redis:/data
+      - ./src/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis:/usr/local/etc/redis
+
+    ports:
+      - "6379:6379"
+    networks:
+      - drivey_network
+    restart: unless-stopped
+volumes:
+  postgres:
+  pgadmin:
+  redis:
+  logs:
+
+networks:
+  drivey_network:
+# docker compose -f docker-compose.yml up -d --build
+# docker compose -f docker-compose.yml down
