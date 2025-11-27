@@ -1,8 +1,9 @@
 package api
 
 import (
-	"github.com/alirzamehrzad/drivey/api/routers"
 	"github.com/gin-gonic/gin"
+
+	"github.com/alirzamehrzad/drivey/api/routers"
 )
 
 func InitServer() {

@@ -1,24 +1,25 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
+// ***class
 type HealthHandler struct {
 }
 
+// *** constructor
 func NewHealthHandler() *HealthHandler {
 	return &HealthHandler{}
 }
 
-func (h *HealthHandler) Health(c *gin.Context) {
-	c.JSON(http.StatusOK, "Working !")
+// => handlers
+func (h *HealthHandler) Health(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, "working")
 }
 
-func (h *HealthHandler) GetHealthById(c *gin.Context) {
-	id := c.Params.ByName("id")
-	c.JSON(http.StatusOK, fmt.Sprintf("Working on id: %s", id))
+func (h *HealthHandler) HealthPost(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, "working post")
 }

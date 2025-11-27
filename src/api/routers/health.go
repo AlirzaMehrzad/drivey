@@ -1,13 +1,15 @@
 package routers
 
 import (
-	"github.com/alirzamehrzad/drivey/api/handlers"
 	"github.com/gin-gonic/gin"
+
+	"github.com/alirzamehrzad/drivey/api/handlers"
 )
 
 func Health(r *gin.RouterGroup) {
 	handler := handlers.NewHealthHandler()
 
 	r.GET("/", handler.Health)
-	r.GET("/getById/:id", handler.GetHealthById)
+	r.POST("/", handler.HealthPost)
+
 }
