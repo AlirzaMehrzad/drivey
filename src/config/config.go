@@ -73,7 +73,7 @@ func LoadConfig(filename string, fileType string) (*viper.Viper, error) {
 
 	err := v.ReadInConfig()
 	if err != nil {
-		log.Printf("Unable to raed config: %v", err)
+		log.Printf("Unable to read config: %v", err)
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			return nil, errors.New("config file not found")
 		}
@@ -89,7 +89,7 @@ func getConfigPath(env string) string {
 	case "production":
 		return "config/config-production"
 	default:
-		return "config/config-development"
+		return "../config/config-development"
 
 	}
 }
