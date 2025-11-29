@@ -16,5 +16,13 @@ func TestRouter(r *gin.RouterGroup) {
 	r.GET("/user/:id/accounts", handler.Accounts)
 
 	r.POST("/add-user", handler.AddUser)
+	r.POST("/binder/header1", handler.HeaderBinder1)
+	r.POST("/binder/header2", handler.HeaderBinder2)
+
+	r.POST("/binder/query", handler.QueryBinder)
+
+	r.POST("/binder/body", handler.BodyBinder)
+	r.POST("/binder/form", handler.FormBinder)
+	r.POST("/binder/file", handler.FileBinder)
 
 }

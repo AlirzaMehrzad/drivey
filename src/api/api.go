@@ -4,14 +4,21 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 
 	"github.com/alirzamehrzad/drivey/api/routers"
+	"github.com/alirzamehrzad/drivey/api/validations"
 	"github.com/alirzamehrzad/drivey/config"
 )
 
 func InitServer() {
 	cfg := config.GetConfig()
 	r := gin.New()
+	val, ok := binding.Validator.Engine().(*validator.Validate)
+	if ok {
+		val.RegisterValidation("mobile", validations.IranianMobileValidator, true)
+	}
 	r.Use(gin.Logger(), gin.Recovery())
 
 	api := r.Group("/api")
