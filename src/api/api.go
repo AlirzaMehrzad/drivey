@@ -13,8 +13,7 @@ import (
 	"github.com/alirzamehrzad/drivey/config"
 )
 
-func InitServer() {
-	cfg := config.GetConfig()
+func InitServer(cfg *config.Config) {
 	r := gin.New()
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
