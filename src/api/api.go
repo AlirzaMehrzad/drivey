@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 
+	"github.com/alirzamehrzad/drivey/api/middlewares"
 	"github.com/alirzamehrzad/drivey/api/routers"
 	"github.com/alirzamehrzad/drivey/api/validations"
 	"github.com/alirzamehrzad/drivey/config"
@@ -19,7 +20,7 @@ func InitServer() {
 	if ok {
 		val.RegisterValidation("mobile", validations.IranianMobileValidator, true)
 	}
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest())
 
 	api := r.Group("/api")
 
