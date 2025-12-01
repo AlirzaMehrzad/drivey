@@ -18,8 +18,10 @@ func InitServer() {
 	r := gin.New()
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
-		val.RegisterValidation("mobile", validations.IranianMobileValidator, true)
+		val.RegisterValidation("mobile", validations.IranianMobileNumberValidator, true)
 	}
+
+	r.Use(middlewares.Cors(cfg))
 	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest())
 
 	api := r.Group("/api")

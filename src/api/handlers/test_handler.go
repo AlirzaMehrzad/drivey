@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/alirzamehrzad/drivey/api/helper"
 )
 
 type TestHandler struct{}
@@ -100,16 +102,17 @@ func (h *TestHandler) BodyBinder(ctx *gin.Context) {
 	p := personData{}
 	err := ctx.ShouldBindJSON(&p)
 	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"validationError": err.Error(),
-		})
+		ctx.AbortWithStatusJSON(http.StatusBadRequest,
+			helper.GenerateBaseResponseWithValidationError(nil,
+				false, -1, err))
+
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
+	ctx.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"result": "BodyBinder",
-		"person": p,
-	})
+		"Person": p,
+	}, true, 0))
 }
 
 func (h *TestHandler) FormBinder(ctx *gin.Context) {
