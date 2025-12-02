@@ -31,20 +31,29 @@ services:
     depends_on:
       - postgres
 
-  redis:
-    image: redis
-    container_name: redis_container_drivey
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-    volumes:
-      - redis:/data
-      - ../docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
-      - redis:/usr/local/etc/redis
+  # redis:
+  #   image: redis
+  #   container_name: redis_container_drivey
+  #   command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+  #   volumes:
+  #     - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+  #     - redis:/usr/local/etc/redis
 
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - drivey_network
+  #   restart: unless-stopped
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis/redis.conf:/etc/redis/redis.conf:ro
     ports:
       - "6379:6379"
     networks:
       - drivey_network
-    restart: unless-stopped
 volumes:
   postgres:
   pgadmin:
