@@ -6,11 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/alirzamehrzad/drivey/api/middlewares"
 	"github.com/alirzamehrzad/drivey/api/routers"
 	"github.com/alirzamehrzad/drivey/api/validations"
 	"github.com/alirzamehrzad/drivey/config"
+	"github.com/alirzamehrzad/drivey/docs"
 )
 
 func InitServer(cfg *config.Config) {
@@ -41,5 +44,17 @@ func InitServer(cfg *config.Config) {
 		routers.Health(health)
 	}
 
+	RegisterSwagger(r, cfg)
+
 	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+}
+
+func RegisterSwagger(r *gin.Engine, cfg *config.Config) {
+	docs.SwaggerInfo.Title = "Drivey API"
+	docs.SwaggerInfo.Description = "Drivey is a file storage and sharing service."
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = fmt.Sprintf("localhost:%s", cfg.Server.Port)
+	docs.SwaggerInfo.BasePath = "/api"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
