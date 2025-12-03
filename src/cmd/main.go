@@ -1,28 +1,28 @@
 package main
 
 import (
-	"log"
-
 	"github.com/alirzamehrzad/drivey/api"
 	"github.com/alirzamehrzad/drivey/config"
 	"github.com/alirzamehrzad/drivey/data/cache"
 	"github.com/alirzamehrzad/drivey/data/db"
+	"github.com/alirzamehrzad/drivey/pkg/logging"
 )
 
 func main() {
 	cfg := config.GetConfig()
+	logger := logging.NewLogger(cfg)
 
 	err := cache.InitRedis(cfg)
-	if err != nil {
-		log.Fatal(err)
-	}
 	defer cache.CloseRedis()
+	if err != nil {
+		logger.Fatal(logging.Redis, logging.Startup, err.Error(), nil)
+	}
 
 	err = db.InitDb(cfg)
-	if err != nil {
-		log.Fatal(err)
-	}
 	defer db.CloseDb()
+	if err != nil {
+		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
+	}
 
 	api.InitServer(cfg)
 }

@@ -14,11 +14,19 @@ type Config struct {
 	Postgres PostgresConfig
 	Redis    RedisConfig
 	Cors     CorsConfig
+	Logger   LoggerConfig
 }
 
 type ServerConfig struct {
 	Port    string
 	RunMode string
+}
+
+type LoggerConfig struct {
+	FilePath string
+	Encoding string
+	Level    string
+	Logger   string
 }
 
 type PostgresConfig struct {
