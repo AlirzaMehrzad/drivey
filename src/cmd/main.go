@@ -5,6 +5,7 @@ import (
 	"github.com/alirzamehrzad/drivey/config"
 	"github.com/alirzamehrzad/drivey/data/cache"
 	"github.com/alirzamehrzad/drivey/data/db"
+	"github.com/alirzamehrzad/drivey/data/db/migrations"
 	"github.com/alirzamehrzad/drivey/pkg/logging"
 )
 
@@ -23,6 +24,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
+	migrations.Up_1()
 
 	api.InitServer(cfg)
 }
